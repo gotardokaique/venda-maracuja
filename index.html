@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maracujás - Faça seu Pedido!</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #FFFBEB; /* Um tom de amarelo bem claro, como o miolo do maracujá */
+        }
+
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-5px); /* Leve elevação */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Sombra mais pronunciada */
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s ease, bottom 0.5s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .toast.show {
+            opacity: 1;
+            bottom: 30px;
+        }
+        .toast.success {
+            background-color: #10B981; 
+            color: white;
+        }
+        .toast.error {
+            background-color: #EF4444;
+            color: white;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-yellow-500 text-white shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-5 flex flex-col sm:flex-row justify-between items-center">
+            <h1 class="text-3xl font-bold tracking-tight">Maracujá Imperial</h1>
+            <p class="text-yellow-100 text-sm mt-2 sm:mt-0">Peça maracujás frescos ou polpa de alta qualidade!</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 py-10">
+        <h2 class="text-3xl font-semibold text-yellow-700 mb-8 text-center">Nossos Produtos Fresquinhos</h2>
+
+        <div class="grid md:grid-cols-2 gap-10 mb-12">
+            <div class="product-card bg-white rounded-xl shadow-lg p-6 border border-yellow-200">
+                <img src="https://via.placeholder.com/400x300/FFD700/333333?text=Maracujá+Fruta" alt="Maracujá Fruta Inteira" class="w-full h-56 object-cover rounded-lg mb-5 shadow-md">
+                <h3 class="text-2xl font-semibold text-yellow-600 mb-3">Maracujá (Fruta Inteira)</h3>
+                <p class="text-gray-600 mb-5 text-sm leading-relaxed">Nossos maracujás são colhidos no ponto ideal, garantindo máximo sabor e suculência. Perfeitos para sucos naturais, mousses, ou para saborear a fruta pura.</p>
+                <div class="flex flex-col sm:flex-row items-start sm:items-center mb-5">
+                    <label for="qtd-fruta" class="mr-3 text-gray-700 font-medium mb-2 sm:mb-0">Quantidade (kg):</label>
+                    <input type="number" id="qtd-fruta" name="qtd-fruta" min="0.5" step="0.5" value="0.5" class="border-2 border-yellow-300 rounded-md p-2 w-full sm:w-28 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-shadow">
+                </div>
+                <button onclick="Carrinho.adicionarItem('Maracujá (Fruta)', 'fruta', 'qtd-fruta', 'kg')" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-5 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out text-base flex items-center justify-center">
+                    <i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho
+                </button>
+            </div>
+
+            <div class="product-card bg-white rounded-xl shadow-lg p-6 border border-yellow-200">
+                <img src="https://via.placeholder.com/400x300/FFB800/333333?text=Polpa+de+Maracujá" alt="Polpa de Maracujá Congelada" class="w-full h-56 object-cover rounded-lg mb-5 shadow-md">
+                <h3 class="text-2xl font-semibold text-yellow-600 mb-3">Polpa de Maracujá Congelada</h3>
+                <p class="text-gray-600 mb-5 text-sm leading-relaxed">Polpa 100% natural de maracujá, congelada logo após o preparo para preservar o frescor e os nutrientes. Ideal para sucos, vitaminas e sobremesas rápidas.</p>
+                <div class="flex flex-col sm:flex-row items-start sm:items-center mb-5">
+                    <label for="qtd-polpa" class="mr-3 text-gray-700 font-medium mb-2 sm:mb-0">Quantidade (kg):</label>
+                    <input type="number" id="qtd-polpa" name="qtd-polpa" min="0.5" step="0.5" value="0.5" class="border-2 border-yellow-300 rounded-md p-2 w-full sm:w-28 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-shadow">
+                </div>
+                <button onclick="Carrinho.adicionarItem('Polpa de Maracujá', 'polpa', 'qtd-polpa', 'kg')" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-5 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out text-base flex items-center justify-center">
+                    <i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho
+                </button>
+            </div>
+        </div>
+
+        <div id="carrinho-secao" class="bg-white rounded-xl shadow-xl p-6 sm:p-8 mb-8 border-2 border-yellow-400">
+            <h2 class="text-2xl sm:text-3xl font-semibold text-yellow-700 mb-6 border-b-2 border-yellow-200 pb-3 flex items-center">
+                <i class="fas fa-shopping-cart mr-3 text-yellow-500"></i>Seu Pedido
+            </h2>
+            <div id="carrinho-itens" class="mb-6">
+                <p class="text-gray-500 italic">Seu carrinho está vazio. Adicione produtos acima!</p>
+            </div>
+            <div id="carrinho-total" class="text-right font-bold text-xl text-yellow-700 mb-6">
+                </div>
+            <button id="btn-enviar-whatsapp" onclick="Carrinho.enviarPedidoWhatsApp()" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out text-lg flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                <i class="fab fa-whatsapp mr-3"></i>Enviar Pedido via WhatsApp
+            </button>
+        </div>
+    </main>
+
+    <footer class="bg-yellow-600 text-white py-8 text-center">
+        <p class="text-yellow-100">&copy; <span id="currentYear"></span> Maracujá Imperial. Todos os direitos reservados.</p>
+        <p class="text-sm text-yellow-200 mt-1">Feito com dedicação e maracujás de qualidade.</p>
+    </footer>
+
+    <div id="toast-notification" class="toast"></div>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        const Carrinho = {
+            itens: [], // Array para armazenar os produtos no carrinho. Ex: { nome: 'Polpa', tipo: 'polpa', quantidade: 1, unidade: 'kg' }
+            numeroWhatsAppVendedor: '69993173048', // ATENÇÃO: Substitua pelo seu número de WhatsApp com código do país (ex: 55XXYYYYYYYYY)
+
+            /**
+             * Adiciona um item ao carrinho ou atualiza sua quantidade se já existir.
+             * @param {string} nomeProduto - Nome do produto para exibição.
+             * @param {string} tipoProduto - Identificador único do tipo de produto (ex: 'fruta', 'polpa').
+             * @param {string} idCampoQuantidade - ID do campo input onde a quantidade é informada.
+             * @param {string} unidade - Unidade de medida do produto (ex: 'kg').
+             */
+            adicionarItem: function(nomeProduto, tipoProduto, idCampoQuantidade, unidade) {
+                console.log(`Tentando adicionar: ${nomeProduto}, Tipo: ${tipoProduto}, Campo Quant.: ${idCampoQuantidade}, Unidade: ${unidade}`);
+                const campoQuantidade = document.getElementById(idCampoQuantidade);
+                if (!campoQuantidade) {
+                    console.error(`Campo de quantidade com ID '${idCampoQuantidade}' não encontrado.`);
+                    this.mostrarNotificacao('Erro ao encontrar campo de quantidade.', 'error');
+                    return;
+                }
+
+                const quantidade = parseFloat(campoQuantidade.value);
+
+                if (isNaN(quantidade) || quantidade <= 0) {
+                    this.mostrarNotificacao('Por favor, insira uma quantidade válida (maior que zero).', 'error');
+                    campoQuantidade.focus();
+                    return;
+                }
+
+                const itemExistente = this.itens.find(item => item.tipo === tipoProduto);
+
+                if (itemExistente) {
+                    // Se o item já existe, atualiza a quantidade
+                    itemExistente.quantidade = quantidade; // Substitui pela nova quantidade ou soma? Para este caso, substituir faz mais sentido.
+                                                            // Se quisesse somar: itemExistente.quantidade += quantidade;
+                    this.mostrarNotificacao(`${nomeProduto} atualizado no carrinho: ${quantidade} ${unidade}.`, 'success');
+                } else {
+                    // Se não existe, adiciona novo item
+                    this.itens.push({
+                        nome: nomeProduto,
+                        tipo: tipoProduto,
+                        quantidade: quantidade,
+                        unidade: unidade
+                    });
+                    this.mostrarNotificacao(`${nomeProduto} (${quantidade} ${unidade}) adicionado ao carrinho!`, 'success');
+                }
+
+                this.atualizarVisorCarrinho();
+                console.log('Carrinho atual:', this.itens);
+            },
+
+            /**
+             * Remove um item do carrinho.
+             * @param {string} tipoProduto - O tipo do produto a ser removido.
+             */
+            removerItem: function(tipoProduto) {
+                console.log(`Removendo item tipo: ${tipoProduto}`);
+                const itemIndex = this.itens.findIndex(item => item.tipo === tipoProduto);
+                if (itemIndex > -1) {
+                    const itemRemovido = this.itens.splice(itemIndex, 1)[0];
+                    this.mostrarNotificacao(`${itemRemovido.nome} removido do carrinho.`, 'success');
+                    this.atualizarVisorCarrinho();
+                }
+            },
+
+            /**
+             * Atualiza a exibição dos itens do carrinho na página HTML.
+             */
+            atualizarVisorCarrinho: function() {
+                const divItensCarrinho = document.getElementById('carrinho-itens');
+                const btnEnviar = document.getElementById('btn-enviar-whatsapp');
+
+                if (!divItensCarrinho) {
+                    console.error("Elemento 'carrinho-itens' não encontrado no DOM.");
+                    return;
+                }
+
+                divItensCarrinho.innerHTML = ''; // Limpa o conteúdo atual do carrinho
+
+                if (this.itens.length === 0) {
+                    divItensCarrinho.innerHTML = '<p class="text-gray-500 italic">Seu carrinho está vazio. Adicione produtos acima!</p>';
+                    if(btnEnviar) btnEnviar.disabled = true; // Desabilita botão de enviar se carrinho vazio
+                } else {
+                    const ul = document.createElement('ul');
+                    ul.className = 'space-y-3'; // Estilização Tailwind para espaçamento entre itens da lista
+
+                    this.itens.forEach(item => {
+                        if (item.quantidade > 0) { // Garante que só itens com quantidade sejam mostrados
+                            const li = document.createElement('li');
+                            li.className = 'flex justify-between items-center p-3 bg-yellow-50 rounded-md border border-yellow-200'; // Estilo para cada item
+
+                            // Nome e quantidade do item
+                            const itemText = document.createElement('span');
+                            itemText.className = 'text-gray-700';
+                            itemText.textContent = `${item.nome}: ${item.quantidade} ${item.unidade}`;
+
+                            // Botão de remover item
+                            const botaoRemover = document.createElement('button');
+                            botaoRemover.className = 'text-red-500 hover:text-red-700 transition-colors';
+                            botaoRemover.innerHTML = '<i class="fas fa-trash-alt"></i>';
+                            botaoRemover.title = `Remover ${item.nome}`;
+                            botaoRemover.onclick = () => this.removerItem(item.tipo);
+
+                            li.appendChild(itemText);
+                            li.appendChild(botaoRemover);
+                            ul.appendChild(li);
+                        }
+                    });
+                    divItensCarrinho.appendChild(ul);
+                    if(btnEnviar) btnEnviar.disabled = false; // Habilita botão de enviar
+                }
+            },
+
+            /**
+             * Gera a mensagem formatada para ser enviada via WhatsApp.
+             * @returns {string|null} A mensagem formatada ou null se o carrinho estiver vazio.
+             */
+            gerarMensagemWhatsApp: function() {
+                if (this.itens.length === 0) {
+                    this.mostrarNotificacao('Seu carrinho está vazio. Adicione itens antes de enviar o pedido.', 'error');
+                    return null;
+                }
+
+                let mensagem = "Olá! Gostaria de fazer o seguinte pedido:\n\n";
+                this.itens.forEach(item => {
+                    if (item.quantidade > 0) {
+                        mensagem += `* ${item.nome}: ${item.quantidade} ${item.unidade}\n`;
+                    }
+                });
+                mensagem += "\nAguardo o contato para combinar a entrega e pagamento. Obrigado!";
+                return mensagem;
+            },
+
+            enviarPedidoWhatsApp: function() {
+                if (!this.numeroWhatsAppVendedor || this.numeroWhatsAppVendedor === '5569993173048') {
+                    this.mostrarNotificacao('Número do vendedor não configurado. Contate o administrador.', 'error');
+                    console.error("Número de WhatsApp do vendedor não configurado no script.");
+                    return;
+                }
+                
+                const mensagem = this.gerarMensagemWhatsApp();
+                if (mensagem) {
+                    const mensagemCodificada = encodeURIComponent(mensagem);
+                    const linkWhatsApp = `https://wa.me/${this.numeroWhatsAppVendedor}?text=${mensagemCodificada}`;
+
+                    console.log("Link WhatsApp gerado:", linkWhatsApp);
+                    this.mostrarNotificacao('Redirecionando para o WhatsApp...', 'success');
+                    window.open(linkWhatsApp, '_blank'); // Abre em uma nova aba
+                }
+            },
+
+            /**
+             * Mostra uma notificação (toast) na tela.
+             * @param {string} mensagem - A mensagem a ser exibida.
+             * @param {'success'|'error'} tipo - O tipo de notificação ('success' ou 'error').
+             */
+            mostrarNotificacao: function(mensagem, tipo = 'success') {
+                const toastElement = document.getElementById('toast-notification');
+                if (!toastElement) return;
+
+                toastElement.textContent = mensagem;
+                toastElement.className = 'toast'; // Reseta classes
+                toastElement.classList.add(tipo); // Adiciona classe do tipo (success/error)
+                toastElement.classList.add('show');
+
+                setTimeout(() => {
+                    toastElement.classList.remove('show');
+                }, 3000); 
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            Carrinho.atualizarVisorCarrinho();
+        });
+
+    </script>
+</body>
+</html>
